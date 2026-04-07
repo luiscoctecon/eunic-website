@@ -82,7 +82,7 @@ h1, h2, h3 {
     width: 100%;
 }
 
-.btn-nav {
+.nav {
     background: #492e21 !important;
     color: #c6b4a1 !important;
     padding: 8px 16px !important;
@@ -203,6 +203,11 @@ h1, h2, h3 {
     background: #3a2419;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(73, 46, 33, 0.4);
+}
+.btn.secondary-2 {
+    background: transparent;
+    color: #fbfbfb;
+    border: 2px solid #af8b52;
 }
 
 .btn.secondary {
