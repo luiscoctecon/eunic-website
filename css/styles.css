@@ -1,0 +1,524 @@
+
+
+@import url('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+        body {
+            font-family: 'Noto Serif Display', serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #000000 100%);
+        }
+        
+        .gradient-gold {
+            background: linear-gradient(135deg, #ffd700, #ffed4a, #f59e0b);
+        }
+        .gradient-black {
+            background: linear-gradient(135deg, #5e5a4d 0%, #000000 100%);
+        }
+        .gradient-header{
+            background: linear-gradient(135deg, #000000 0%, #f8f9fa 100%);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff, #cebf96);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .text-color {
+            background-color: #d3c8a9;
+        }
+        .texter {
+            color: #b6a27b;
+        }
+        .gradient-weird {
+            background: linear-gradient(135deg, #343434 0%, #6d6767 100%);
+        }
+        .bgrey {
+            background-color: #262626;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+/*Workshop Background*/
+.light-rays-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+        /* Mobile Menu Gradient Background */
+        #mobileMenu {
+            background: linear-gradient(135deg, #ffffff, #cebf96) !important;
+            height: fit-content;
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .hero-pattern {
+            background-image: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+        }
+    * {box-sizing:border-box}
+
+/* Swiper styles */
+.swiper {
+    width: 100%;
+    max-width: 100%;
+    height: 600px;
+    margin: 0 auto;
+}
+
+.swiper-slide {
+    text-align: center;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #ffd700 !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 1.2rem !important;
+    font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: #ffd700;
+    color: white !important;
+}
+
+.swiper-pagination {
+    bottom: 20px !important;
+}
+
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background: #ffd700 !important;
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Custom fade effect */
+.swiper-fade .swiper-slide {
+    transition: opacity 0.5s ease;
+}
+
+/* Hide scrollbar but maintain functionality */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer and Edge */
+    scrollbar-width: none;     /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Smooth scrolling for product cards */
+.snap-x {
+    scroll-behavior: smooth;
+}
+
+/* Add padding to ensure last card is fully visible */
+.pb-6 {
+    padding-bottom: 1.5rem;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin-top: 2rem;
+    }
+
+    .text-gradient {
+        display: inline-block;
+    }
+
+    section {
+        padding: 4rem 1rem !important;
+    }
+
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Adjust button sizes for better touch targets */
+    button {
+        padding: 1rem 2rem;
+        min-height: 3.5rem;
+    }
+
+    /* Improve readability on mobile */
+    p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    /* Adjust spacing for mobile */
+    .space-y-8 > * + * {
+        margin-top: 2rem;
+    }
+
+    /* Make sure images don't overflow */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Optimize swiper for mobile */
+    .swiper {
+        height: 700px !important;
+        width: 100% !important;
+        max-width: 90vw !important;
+    }
+    
+    /* Fix container width on mobile */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 36px !important;
+        height: 36px !important;
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 1rem !important;
+    }
+
+    .swiper-pagination {
+        bottom: 10px !important;
+    }
+
+    .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+    }
+
+    /* Improve mobile grid layouts */
+    .grid {
+        gap: 2rem !important;
+    }
+
+    /* Adjust testimonial cards for mobile */
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 430px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+
+
+/* Position the "next button" to the right */
+
+
+/* On hover, add a black background color with a little bit see-through */
+
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+#ogl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+
+/* typewriter effect */
+
+.typewriter {
+    display: inline-flex;
+    min-height: 1em;
+    border-right: 2px solid #fff;
+    
+    overflow:auto;
+    animation: blink-caret 0.7s step-end infinite;
+}
+@keyframes blink-caret {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: transparent; }
+}
+
+
+ol,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.calendar-month {
+  position: relative;
+  background-color: var(--grey-200);
+  border: solid 1px var(--grey-200);
+}
+
+.calendar-month-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.calendar-month-header-selected-month {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.calendar-month-header-selectors {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80px;
+}
+
+.calendar-month-header-selectors > * {
+  cursor: pointer;
+}
+
+.day-of-week {
+  color: var(--grey-800);
+  font-size: 18px;
+  background-color: #fff;
+  padding-bottom: 5px;
+  padding-top: 10px;
+}
+
+.day-of-week,
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day-of-week > * {
+  text-align: right;
+  padding-right: 5px;
+}
+
+.days-grid {
+  height: 100%;
+  position: relative;
+  grid-column-gap: var(--grid-gap);
+  grid-row-gap: var(--grid-gap);
+  border-top: solid 1px var(--grey-200);
+}
+
+.calendar-day {
+  position: relative;
+  min-height: 100px;
+  font-size: 16px;
+  background-color: #fff;
+  color: var(--grey-800);
+  padding: 5px;
+}
+
+.calendar-day > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 2px;
+  width: var(--day-label-size);
+  height: var(--day-label-size);
+}
+
+/*menu */
+
+#menuDesktop a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-decoration: none;
+}
+#menuDesktop {
+    position: fixed; display: flex; width: 100%; background-color: transparent; top: 0; backdrop-filter: blur(10px); z-index: 50; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); animation: fade-in 1s;
+align-items: center;
+}
+.events-desktop a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    ;
+    margin-left: 2rem;
+}
+@media (min-width: 500px) {
+    
+        #navigation { display: none;}
+    }
+
+
+#mobileMenu {
+    background: linear-gradient(135deg, #ffffff, #cebf96) !important;
+    height: fit-content;
+}
+#mobileMenuBtn {
+    color: white; z-index: 50;
+}
+
+@media (min-width: 507px) {
+    .menu-desktop  {
+        display: none;
+    }
+    .mobileMenuBtn {
+        display: none;
+    }
+
+}
