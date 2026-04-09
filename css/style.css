@@ -295,6 +295,8 @@ h1, h2, h3 {
 }
 .consulting-intro {
     padding: 2rem 2rem;
+    line-height: 2;
+    gap: 10rem;
 }
 .consulting-cards {
     display: grid;
@@ -309,6 +311,18 @@ h1, h2, h3 {
     position: relative;
 
 
+}
+.consulting-section {
+    background: #3a2419;
+    padding: 4rem 2rem;
+    gap: 10rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    line-height: 2;
+    position: relative;
+    overflow: hidden;
+    color: #c6b4a1;
 }
 .story-image img {
     width: 80%;
@@ -484,12 +498,20 @@ h1, h2, h3 {
     flex-wrap: wrap;
 }
 .card-image {
+    text-align: center;
     display: block;
-    width: 100%;
+    width: auto;
     height: auto;
     border-radius: 15px;
     object-fit: cover;
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+.card-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    object-fit: cover;
     transition: all 0.3s ease;
 }
 .option-card {

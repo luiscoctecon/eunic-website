@@ -1,4 +1,7 @@
 /* Quiz Styles */
+body {
+    background-color: #453423;
+}
 .text-gradient {
     background: linear-gradient(135deg, #aa8e70, #fbfaf8);
     -webkit-background-clip: text;
@@ -7,6 +10,7 @@
 }
 
 .question-card {
+  background-color: #b7792d;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 0.5s ease-out forwards;
