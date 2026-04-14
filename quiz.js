@@ -1,63 +1,100 @@
 // Quiz questions and options
 const questions = [
     {
-        question: "When you think about improving your life, what excites you most right now?",
+        question: "Which of the following best describes your current situation?",
         options: [
-            { text: "Transforming my image (hair, makeup, fashion)", value: "A" },
-            { text: "Growing in business & learning strategies", value: "B" },
-            { text: "Healing my emotions & strengthening my mindset", value: "C" }
+            { text: "I feel called to grow something, but I'm stuck in inconsistency and overthinking", value: "A" },
+            { text: "I have ideas and some movement, but no clear structure or consistent income yet", value: "B" },
+            { text: "I already have a business/personal brand and i'm ready to scale with strategy and structure", value: "C" }
         ]
     },
     {
-        question: "Which of these statements feels more like you today?",
+        question: "How would you describe your current emotional state on a daily basis??",
         options: [
-            { text: "I want to look in the mirror and finally LOVE what I see", value: "A" },
+            { text: "I feel stable and in control", value: "A" },
             { text: "I know I can achieve more success if I get the right guidance", value: "B" },
-            { text: "I feel stuck emotionally and need to break free from negative cycles", value: "C" }
+            { text: "I often feel overwhelmed or mentally scattered", value: "C" }
         ]
     },
     {
-        question: "How do you usually handle challenges?",
+        question: "Which of these patterns do you recognize in recognize in yourself the most?",
         options: [
-            { text: "I change my appearance or style to feel better", value: "A" },
-            { text: "I focus on working harder or trying new business ideas", value: "B" },
-            { text: "I retreat, overthink, or get demotivated", value: "C" }
+            { text: "Overthinking everything and delaying decisions", value: "A" },
+            { text: "Starting things but not following through", value: "B" },
+            { text: "Doubting myself even when I know what to do", value: "C" }
         ]
     },
     {
-        question: "Which result would make the biggest impact in your life right now?",
+        question: "Have you experienced moments where you feel completely anxious, overwhelmed, or unsure of yourself?",
         options: [
-            { text: "Confidence to shine with my personal image", value: "A" },
-            { text: "Financial stability and business growth", value: "B" },
-            { text: "Inner peace, clarity, and emotional strength", value: "C" }
+            { text: "No", value: "A" },
+            { text: "Rarely", value: "B" },
+            { text: "Yes - and it'becoming exhausting", value: "C" }
         ]
     },
     {
-        question: "How much are you currently investing in your personal growth?",
+        question: "How often do your emotions affect your ability to stay consistent in your business or decisions?",
         options: [
-            { text: "Less than $100/month", value: "A" },
-            { text: "Around $100–$500/month", value: "B" },
-            { text: "$500+ /month because I see it as a priority", value: "C" }
+            { text: "Rarely - I can stay consistent regardless of how i feel", value: "A" },
+            { text: "Sometimes - it affects me, but i can usually get back on track", value: "B" },
+            { text: "I feel like I'm constantly self-sabotaging my business", value: "C" }
         ]
     },
     {
-        question: "What best describes your income level right now?",
+        question: "What do you feel is the main thing holding you back right now?",
         options: [
-            { text: "Less than $2,000/month", value: "A" },
-            { text: "$2,000–$5,000/month", value: "B" },
-            { text: "$5,000+/month", value: "C" },
-            { text: "Prefer Not to Say", value: "D" }
+            { text: "I overthink/ I'm inconsistent", value: "A" },
+            { text: "I don't know what to do next", value: "B" },
+            { text: "I start but don't finish", value: "C" }
+            
             
         ]
     },
     {
-        question: "What's the BEST time to contact you?",
+        question: "If nothing changes in your life or business over the next 6-12 months.. how would that honestly make you feel?",
         options: [
-            { text: "Morning", value: "morning" },
-            { text: "Afternoon", value: "afternoon" },
-            { text: "Evening", value: "evening" }
+            { text: "I'm honestly okay staying where I am right now", value: "A" },
+            { text: "I feel far from it", value: "B" },
+            { text: "I feel completely disconnected from it", value: "C" },
+        
+            
         ]
-    }
+    },
+
+    {  
+        question: "How far do you feel from the life or business you actuall want?",
+        options: [
+            { text: "I'm pretty close, just some adjustments needed", value: "A" },
+            { text: "I feel far from it", value: "B" },
+            { text: "I feel completley disconnected from it", value: "C" },
+
+        ]
+
+    },
+    { 
+        question: "RIght now, are you more afraid of investing in yourself.. or staying in the same situation?",
+        options: [
+            { text: "Investing feels scarier", value: "A" },
+            { text: "Both feel ucomfortable", value: "B" },
+            { text: "I'm more afraid of wasting more time like this", value: "C" },
+        ]
+    },
+    { question: "What is your current monthly income ( from your business or personal brand )?",
+        options: [
+            { text: "€1K- €3K", value: "A" },
+            { text: "€3K- €5K", value: "B" },
+            { text: "€10K+", value: "C" }
+        ]
+    },
+    {
+        question: "If you found the right support to help you create clarity, structure, and consistent income, are you in a position to invest in your growth right now?",
+        options: [
+            { text: "Yes, I'm ready to invest in myself right now", value: "A" },
+            { text: "I'm open, but I would need to think about it", value: "B" },
+            { text: "Not at the moment", value: "C" },
+        ]
+    },
+
 ];
 
 let currentQuestion = 0;
@@ -185,7 +222,7 @@ quizForm.addEventListener('submit', async (e) => {
     formData.append('phone', phone);
     formData.append('email', email);
     formData.append('answers', JSON.stringify(answers));
-    formData.append('bestTimeToContact', answers[6] || 'Not specified');
+    
 
     try {
         const response = await fetch('https://api.web3forms.com/submit', {
@@ -194,7 +231,7 @@ quizForm.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            alert('Thank you for completing the quiz! We will email you soon with your results.');
+            alert('Thank you for completing the quiz! I will be in contact with you soon to share the next steps ☺️');
             window.location.href = 'https://euniceinsideglow.com/thankyouquiz';
         } else {
             alert('There was an error submitting your quiz. Please try again.');

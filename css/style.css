@@ -1343,3 +1343,31 @@ h1, h2, h3 {
         text-align: center;
     }
 }
+
+/* Communicator Page */
+.communicator-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #c6b4a1;
+    padding: 4rem 0;
+}
+
+.communicator-content {
+    text-align: center;
+    max-width: 800px;
+    color: #492e21;
+}
+
+.communicator-content h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.communicator-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+}
