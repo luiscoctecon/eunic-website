@@ -17,9 +17,12 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="scroll-progress"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
     <nav class="navbar">
         <div class="logo">Eunice Inside Glow</div>
         <ul class="nav-links">
@@ -37,27 +40,29 @@
         </div>
     </nav>
 
-    <section id="consulting-hero" class="consulting-hero" style="position: relative; align-items: center; text-align: center;">
-        <img src="https://res.cloudinary.com/dg6q2kxea/image/upload/v1774440327/Beige_Landscape_Mountain_Travel_Picture_Postcard_-_2_az6mfz.jpg" alt="Consulting Hero" class="consulting-hero-image" style="width: 80%;">
-         <div class="community-hero-dark-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.45); z-index: 1;"></div>
-        <div class="consulting-hero-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center; z-index: 2;">
-            <h1 style="color: #ffffff; font-size: 3rem; text-align: center; padding: 2rem;">Glow in Expansion 1:1 Consulting</h1>
+    <section id="consulting-hero" class="page-hero">
+        <div class="page-hero-media">
+            <img src="https://res.cloudinary.com/dg6q2kxea/image/upload/v1774440327/Beige_Landscape_Mountain_Travel_Picture_Postcard_-_2_az6mfz.jpg" alt="Consulting Hero">
         </div>
-    </div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content" data-reveal>
+            <p class="eyebrow">1:1 Consulting</p>
+            <h1>Glow in Expansion 1:1 Consulting</h1>
+        </div>
     </section>
 
     <div class="consulting-intro">
-        <h3 style="font-size: large;">Private 1:1 Strategic Consulting for Women Ready to Scale</h3>
-        <p>
+        <h3 data-reveal>Private 1:1 Strategic Consulting for Women Ready to Scale</h3>
+        <p data-reveal>
             <span style="font-weight: bold;">Reverse engineer the dream.</span> <br>
             This is a private strategic acceleration program designed for women who are ready to monetize their authority and scale their impact with precision. This is not emotional healing — this is strategic movement. Inside these eight weeks, we take your vision and reverse engineer it into an executable system so your next chapter is built from clarity, structure, and sustainable momentum.
         </p>
     </div>
 
     <section id="consulting-content" class="consulting-cards">
-        <div class="consulting-section">
+        <div class="consulting-section" data-reveal data-reveal-group>
             <h3>Who This Is For</h3>
-                    <p>This program is for women who:</p>
+            <p>This program is for women who:</p>
             <ul>
                 <li>Already feel the calling to lead, teach, or build authority</li>
                 <li>Want to monetize their expertise or personal brand</li>
@@ -67,7 +72,7 @@
             <p>You are not starting from zero. You are ready to activate the next level.</p>
         </div>
 
-        <div class="consulting-section">
+        <div class="consulting-section" data-reveal data-reveal-group>
             <h3>What We Do Together</h3>
             <img src="https://res.cloudinary.com/dg6q2kxea/image/upload/v1774448235/20250220-405A4404_ipwraz.jpg" style="max-width: 400px; width: 300px; float: right; object-fit: cover; margin-left: 20px;">
             <p>During this private consulting experience, we reverse engineer your next stage of growth. We start with the long-term vision and build the strategy backwards so every action has direction.</p>
@@ -82,7 +87,7 @@
             <p>This creates a clear positioning + monetization map + execution rhythm. No more scattered effort. Only intentional growth.</p>
         </div>
 
-        <div class="consulting-section">
+        <div class="consulting-section" data-reveal data-reveal-group>
             <h3>By the end of the program, you leave with:</h3>
 
             <ul>
@@ -94,7 +99,7 @@
             <p>Expansion is not sustained by adrenaline. It is sustained by regulated execution. Inside this program you will implement systems that allow you to move fast without burning out.</p>
         </div>
 
-        <div class="consulting-section">
+        <div class="consulting-section" data-reveal data-reveal-group>
             <h3>Included Protocols</h3>
 
             <ul>
@@ -106,10 +111,10 @@
             <p>The result: You build momentum from stability — not survival mode.</p>
         </div>
 
-        <div class="consulting-section">
+        <div class="consulting-section" data-reveal data-reveal-group>
             <h3>Community Activation</h3>
 
-                    <p>Your expansion becomes a declaration. At the end of the program you will activate your next chapter inside the community through:</p>
+            <p>Your expansion becomes a declaration. At the end of the program you will activate your next chapter inside the community through:</p>
             <ul>
                 <li>Public Declaration of Your Vision</li>
                 <li>Strategic Feedback Session</li>
@@ -118,10 +123,10 @@
             <p>Because growth is amplified when it is witnessed and supported.</p>
         </div>
 
-        <div class="consulting-section">
+        <div class="consulting-section" data-reveal data-reveal-group>
             <h3>Graduation Ceremony</h3>
 
-                    <p>The program concludes with a formal graduation ceremony inside the Inside Glow ecosystem. This moment marks your transition from vision holder → strategic executor.</p>
+            <p>The program concludes with a formal graduation ceremony inside the Inside Glow ecosystem. This moment marks your transition from vision holder → strategic executor.</p>
             <p>You leave with:</p>
             <ul>
                 <li>Your strategic map</li>
@@ -131,7 +136,7 @@
             <p><strong>You stop chasing opportunities. You begin architecting them.</strong></p>
         </div>
 
-        <div class="consulting-section">
+        <div class="consulting-section" data-reveal data-reveal-group>
             <h3>Apply for Glow in Expansion</h3>
             <p>Private consulting spots are extremely limited and offered only to women who are ready to move with clarity, responsibility, and commitment.</p>
         </div>
@@ -168,11 +173,11 @@
             <span class="carousel-dot" data-index="4" role="tab" aria-selected="false"></span>
         </div>
     </section>
-               
+
      <section id="testimonials" class="testimonials">
         <div class="container">
-            <h2>What Our Community Says</h2>
-            <div class="testimonial-slider">
+            <h2 data-reveal>What Our Community Says</h2>
+            <div class="testimonial-slider" data-reveal="scale">
                 <div class="testimonial active">
                     <p>"Eunice's coaching completely transformed my relationship with myself. I went from feeling stuck and uncertain to confident and purposeful. Her guidance is gentle yet powerful."</p>
                     <cite>- Sarah M.</cite>
@@ -219,7 +224,7 @@
                     <div class="social-links">
                         <a href="https://www.instagram.com/eunice_insideglow/" target="_blank">Instagram</a>
                         <a href="https://youtube.com/@euniceinsideglow?si=vZdEI4F1ZyAqrpfp" target="_blank">YouTube</a>
-                        <a href="hello@euniceinsideglow.com">Email</a>
+                        <a href="mailto:hello@euniceinsideglow.com">Email</a>
                     </div>
                 </div>
             </div>

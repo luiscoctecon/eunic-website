@@ -1,4 +1,46 @@
+// ==========================================================================
+// Loading fade-in (fires once the DOM is parsed — doesn't wait on slow
+// third-party video embeds, which can otherwise leave the page blank)
+// ==========================================================================
+requestAnimationFrame(() => document.body.classList.add('loaded'));
+
+// ==========================================================================
+// Scroll progress bar
+// ==========================================================================
+const progressBar = document.querySelector('.scroll-progress');
+function updateProgress() {
+    if (!progressBar) return;
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = pct + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+updateProgress();
+
+// ==========================================================================
+// Navbar: glass shrink + hide on scroll down / show on scroll up
+// ==========================================================================
+const navbar = document.querySelector('.navbar');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (!navbar) return;
+
+    navbar.classList.toggle('scrolled', y > 40);
+
+    if (y > lastScrollY && y > 200 && !document.body.classList.contains('menu-open')) {
+        navbar.classList.add('nav-hidden');
+    } else {
+        navbar.classList.remove('nav-hidden');
+    }
+    lastScrollY = y;
+}, { passive: true });
+
+// ==========================================================================
 // Hero Slider
+// ==========================================================================
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
 const prevBtn = document.querySelector('.prev');
@@ -25,10 +67,19 @@ if (prevBtn && nextBtn) {
     nextBtn.addEventListener('click', nextSlide);
 }
 
-// Auto slide
-setInterval(nextSlide, 5000);
+if (slides.length > 1) {
+    setInterval(nextSlide, 6000);
+}
 
+// Split hero heading into animated words
+document.querySelectorAll('.hero-content h1').forEach(h1 => {
+    const words = h1.textContent.trim().split(/\s+/);
+    h1.innerHTML = words.map((w, i) => `<span class="word" style="--w-i:${i}">${w}</span>`).join(' ');
+});
+
+// ==========================================================================
 // Mobile Menu
+// ==========================================================================
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 
@@ -36,40 +87,48 @@ if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
         navLinks.classList.toggle('active');
         hamburger.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        });
     });
 }
 
-// Smooth Scrolling
+// ==========================================================================
+// Smooth scrolling for in-page anchors
+// ==========================================================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        if (targetId.length < 2) return;
+        const target = document.querySelector(targetId);
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-        // Close mobile menu after clicking
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
 });
 
+// ==========================================================================
 // Testimonial Slider
+// ==========================================================================
 let currentTestimonial = 0;
 const testimonials = document.querySelectorAll('.testimonial');
 const testPrevBtn = document.querySelector('.test-prev');
 const testNextBtn = document.querySelector('.test-next');
 const dots = document.querySelectorAll('.dot');
+let testimonialTimer;
 
 function showTestimonial(index) {
     testimonials.forEach(test => test.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
     testimonials[index].classList.add('active');
-    dots[index].classList.add('active');
+    if (dots[index]) dots[index].classList.add('active');
     currentTestimonial = index;
 }
 
@@ -83,117 +142,175 @@ function prevTestimonial() {
     showTestimonial(currentTestimonial);
 }
 
+function restartTestimonialTimer() {
+    clearInterval(testimonialTimer);
+    testimonialTimer = setInterval(nextTestimonial, 7000);
+}
+
 if (testPrevBtn && testNextBtn) {
-    testPrevBtn.addEventListener('click', prevTestimonial);
-    testNextBtn.addEventListener('click', nextTestimonial);
+    testPrevBtn.addEventListener('click', () => { prevTestimonial(); restartTestimonialTimer(); });
+    testNextBtn.addEventListener('click', () => { nextTestimonial(); restartTestimonialTimer(); });
 }
 
 if (dots.length > 0) {
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => showTestimonial(index));
+        dot.addEventListener('click', () => { showTestimonial(index); restartTestimonialTimer(); });
     });
 }
 
-// Auto testimonial change
-setInterval(nextTestimonial, 7000);
+if (testimonials.length > 1) {
+    restartTestimonialTimer();
+}
 
-// FAQ Accordion
-const faqItems = document.querySelectorAll('.faq-item');
+// Swipe support for testimonials
+const testimonialSlider = document.querySelector('.testimonial-slider');
+if (testimonialSlider) {
+    let tStartX = 0;
+    testimonialSlider.addEventListener('touchstart', e => tStartX = e.changedTouches[0].clientX, { passive: true });
+    testimonialSlider.addEventListener('touchend', e => {
+        const dx = tStartX - e.changedTouches[0].clientX;
+        if (Math.abs(dx) > 50) {
+            dx > 0 ? nextTestimonial() : prevTestimonial();
+            restartTestimonialTimer();
+        }
+    }, { passive: true });
+}
 
-faqItems.forEach(item => {
+// ==========================================================================
+// FAQ Accordion (animated height, single-open)
+// ==========================================================================
+document.querySelectorAll('.faq-item').forEach(item => {
     const question = item.querySelector('h3');
     const answer = item.querySelector('p');
+    if (!question || !answer) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'faq-answer';
+    answer.parentNode.insertBefore(wrapper, answer);
+    wrapper.appendChild(answer);
 
     question.addEventListener('click', () => {
-        // Close other FAQs
-        faqItems.forEach(otherItem => {
-            if (otherItem !== item) {
-                otherItem.querySelector('p').style.display = 'none';
+        const isOpen = item.classList.contains('open');
+
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+            if (openItem !== item) {
+                openItem.classList.remove('open');
+                openItem.querySelector('.faq-answer').style.maxHeight = null;
             }
         });
 
-        // Toggle current FAQ
-        if (answer.style.display === 'block') {
-            answer.style.display = 'none';
+        if (isOpen) {
+            item.classList.remove('open');
+            wrapper.style.maxHeight = null;
         } else {
-            answer.style.display = 'block';
+            item.classList.add('open');
+            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
         }
     });
 });
 
-// Scroll Animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// ==========================================================================
+// Scroll reveal (IntersectionObserver) with per-group stagger
+// ==========================================================================
+const revealGroups = new Map();
+document.querySelectorAll('[data-reveal]').forEach(el => {
+    const group = el.closest('[data-reveal-group]') || el.parentElement;
+    if (!revealGroups.has(group)) revealGroups.set(group, []);
+    revealGroups.get(group).push(el);
+});
+revealGroups.forEach(list => {
+    list.forEach((el, i) => el.style.setProperty('--reveal-i', i % 8));
+});
 
-const observer = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
-// Observe elements for animation
-document.querySelectorAll('.option-card, .story-image, .testimonial, .faq-item').forEach(el => {
-    observer.observe(el);
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+// Comparison / pricing list staggered children reveal
+document.querySelectorAll('.comparison-card, .pricing-list').forEach(el => {
+    Array.from(el.children).forEach((child, i) => child.style.setProperty('--reveal-i', i));
+    revealObserver.observe(el);
 });
 
-// Add CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-    .option-card, .story-image, .testimonial, .faq-item {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s ease;
-    }
-    .option-card.animate, .story-image.animate, .testimonial.animate, .faq-item.animate {
-        opacity: 1;
-        transform: translateY(0);
-    }
-`;
-document.head.appendChild(style);
+// ==========================================================================
+// Count-up numbers (price figures)
+// ==========================================================================
+function animateCount(el) {
+    const raw = el.textContent.trim();
+    const numMatch = raw.match(/[\d,.]+/);
+    if (!numMatch) return;
+    const target = parseFloat(numMatch[0].replace(/,/g, ''));
+    if (isNaN(target)) return;
+    const prefix = raw.slice(0, numMatch.index);
+    const suffix = raw.slice(numMatch.index + numMatch[0].length);
+    const duration = 1400;
+    const start = performance.now();
 
-// Parallax effect for hero
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(target * eased);
+        el.textContent = prefix + value.toLocaleString('en-US') + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = raw;
     }
-});
+    requestAnimationFrame(tick);
+}
 
-// Button hover effects
+const countObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCount(entry.target);
+            countObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.6 });
+
+document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+
+// ==========================================================================
+// Magnetic buttons + cursor-tracked glow
+// ==========================================================================
 document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-3px) scale(1.02)';
+    btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        btn.style.setProperty('--btn-x', x + 'px');
+        btn.style.setProperty('--btn-y', y + 'px');
+        const relX = (x - rect.width / 2) * 0.15;
+        const relY = (y - rect.height / 2) * 0.25;
+        btn.style.transform = `translate(${relX}px, ${relY - 3}px)`;
     });
-
-    btn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
 });
 
-// Loading animation
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
+// Decorative cursor glow on dark sections
+const cursorGlow = document.querySelector('.cursor-glow');
+if (cursorGlow && window.matchMedia('(pointer: fine)').matches) {
+    const glowZones = document.querySelectorAll('.cta, .sadly, .different, .what-brings-you-here, .footer');
+    let overGlowZone = false;
 
-// Add loading styles
-const loadingStyle = document.createElement('style');
-loadingStyle.textContent = `
-    body {
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    body.loaded {
-        opacity: 1;
-    }
-`;
-document.head.appendChild(loadingStyle);
+    document.addEventListener('mousemove', e => {
+        cursorGlow.style.left = e.clientX + 'px';
+        cursorGlow.style.top = e.clientY + 'px';
 
-// Photo Carousel
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        overGlowZone = !!el && Array.from(glowZones).some(zone => zone.contains(el));
+        cursorGlow.classList.toggle('active', overGlowZone);
+    });
+}
+
+// ==========================================================================
+// Photo Carousel (used on about/podcast pages)
+// ==========================================================================
 const carouselTrack = document.querySelector('.carousel-track');
 const carouselSlides = document.querySelectorAll('.carousel-slide');
 const carouselPrevBtn = document.querySelector('.carousel-prev');
@@ -201,116 +318,63 @@ const carouselNextBtn = document.querySelector('.carousel-next');
 const carouselDots = document.querySelectorAll('.carousel-dot');
 
 let currentCarouselIndex = 0;
-let slideWidth = 400; // Default desktop width
-let slideGap = 24; // Default gap (1.5rem = 24px)
+let slideWidth = 400;
+let slideGap = 24;
 let totalSlideWidth = slideWidth + slideGap;
 let touchStartX = 0;
 let touchEndX = 0;
 
-// Determine slide width based on viewport
 function updateSlideWidth() {
-    if (window.innerWidth <= 380) {
-        slideWidth = 240;
-        slideGap = 13; // 0.8rem
-    } else if (window.innerWidth <= 480) {
-        slideWidth = 260;
-        slideGap = 13;
-    } else if (window.innerWidth <= 640) {
-        slideWidth = 280;
-        slideGap = 16;
-    } else if (window.innerWidth <= 768) {
-        slideWidth = 320;
-        slideGap = 19;
-    } else if (window.innerWidth <= 1024) {
-        slideWidth = 350;
-        slideGap = 24;
-    } else {
-        slideWidth = 400;
-        slideGap = 24;
-    }
+    if (window.innerWidth <= 380) { slideWidth = 240; slideGap = 13; }
+    else if (window.innerWidth <= 480) { slideWidth = 260; slideGap = 13; }
+    else if (window.innerWidth <= 640) { slideWidth = 280; slideGap = 16; }
+    else if (window.innerWidth <= 768) { slideWidth = 320; slideGap = 19; }
+    else if (window.innerWidth <= 1024) { slideWidth = 350; slideGap = 24; }
+    else { slideWidth = 400; slideGap = 24; }
     totalSlideWidth = slideWidth + slideGap;
 }
 
 function scrollToSlide(index) {
     if (carouselSlides.length > 0) {
         currentCarouselIndex = (index + carouselSlides.length) % carouselSlides.length;
-        const scrollLeft = currentCarouselIndex * totalSlideWidth;
-        
-        carouselTrack.scrollTo({
-            left: scrollLeft,
-            behavior: 'smooth'
-        });
-
+        carouselTrack.scrollTo({ left: currentCarouselIndex * totalSlideWidth, behavior: 'smooth' });
         updateCarouselDots();
     }
 }
 
 function updateCarouselDots() {
-    carouselDots.forEach((dot, idx) => {
-        if (idx === currentCarouselIndex) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
-    });
+    carouselDots.forEach((dot, idx) => dot.classList.toggle('active', idx === currentCarouselIndex));
 }
 
-function nextCarouselSlide() {
-    scrollToSlide(currentCarouselIndex + 1);
-}
+function nextCarouselSlide() { scrollToSlide(currentCarouselIndex + 1); }
+function prevCarouselSlide() { scrollToSlide(currentCarouselIndex - 1); }
 
-function prevCarouselSlide() {
-    scrollToSlide(currentCarouselIndex - 1);
-}
-
-// Touch handlers for mobile swiping
-function handleTouchStart(e) {
-    touchStartX = e.changedTouches[0].clientX;
-}
-
+function handleTouchStart(e) { touchStartX = e.changedTouches[0].clientX; }
 function handleTouchEnd(e) {
     touchEndX = e.changedTouches[0].clientX;
-    
-    // Calculate distance swiped
     const swipeDistance = touchStartX - touchEndX;
-    const threshold = 50; // Minimum swipe distance in pixels
-    
-    if (Math.abs(swipeDistance) > threshold) {
-        if (swipeDistance > 0) {
-            // Swiped left - show next slide
-            nextCarouselSlide();
-        } else {
-            // Swiped right - show previous slide
-            prevCarouselSlide();
-        }
+    if (Math.abs(swipeDistance) > 50) {
+        swipeDistance > 0 ? nextCarouselSlide() : prevCarouselSlide();
     }
 }
 
-// Initialize carousel
 updateSlideWidth();
 
 if (carouselPrevBtn && carouselNextBtn && carouselTrack) {
     carouselPrevBtn.addEventListener('click', prevCarouselSlide);
     carouselNextBtn.addEventListener('click', nextCarouselSlide);
-    
-    // Add touch event listeners
     carouselTrack.addEventListener('touchstart', handleTouchStart, false);
     carouselTrack.addEventListener('touchend', handleTouchEnd, false);
 }
 
-// Carousel dot navigation
-carouselDots.forEach((dot, index) => {
-    dot.addEventListener('click', () => scrollToSlide(index));
-});
+carouselDots.forEach((dot, index) => dot.addEventListener('click', () => scrollToSlide(index)));
 
-// Update active dot on scroll
 if (carouselTrack) {
     let scrollTimeout;
     carouselTrack.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
-            const scrollLeft = carouselTrack.scrollLeft;
-            const index = Math.round(scrollLeft / totalSlideWidth);
+            const index = Math.round(carouselTrack.scrollLeft / totalSlideWidth);
             if (index < carouselSlides.length && index !== currentCarouselIndex) {
                 currentCarouselIndex = index;
                 updateCarouselDots();
@@ -319,26 +383,16 @@ if (carouselTrack) {
     });
 }
 
-// Handle window resize
 window.addEventListener('resize', () => {
     updateSlideWidth();
-    // Re-scroll to current slide after resize
     scrollToSlide(currentCarouselIndex);
 });
 
-// Prevent button double-click
 [carouselPrevBtn, carouselNextBtn].forEach(btn => {
-    if (btn) {
-        btn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        });
-    }
+    if (btn) btn.addEventListener('touchstart', e => e.preventDefault());
 });
 
-// Auto-scroll carousel (optional - uncomment to enable)
-// setInterval(nextCarouselSlide, 6000);
-
- function scrollCarousel(direction) {
-                        const track = document.getElementById('carouselTrack');
-                        track.scrollBy({ left: direction * 420, behavior: 'smooth' });
-                    }
+function scrollCarousel(direction) {
+    const track = document.getElementById('carouselTrack');
+    if (track) track.scrollBy({ left: direction * 420, behavior: 'smooth' });
+}
