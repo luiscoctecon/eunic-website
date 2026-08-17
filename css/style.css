@@ -72,6 +72,9 @@ h1 { font-size: clamp(2.4rem, 1.9rem + 2vw, 3.6rem); }
 h2 { font-size: clamp(1.9rem, 1.6rem + 1.2vw, 2.8rem); }
 h3 { font-size: clamp(1.35rem, 1.2rem + .6vw, 1.8rem); }
 
+/* Section headings kept visually consistent with h1 sizing while staying semantically h2 for SEO hierarchy */
+.section-title { font-size: clamp(2.4rem, 1.9rem + 2vw, 3.6rem); }
+
 p { font-size: 1.05rem; }
 
 a { color: inherit; }
@@ -603,7 +606,7 @@ button:not(.btn) a { color: inherit; text-decoration: none; }
 .intro-hook button { margin-top: 1rem; }
 
 .imagine { background: var(--cream-100); text-align: center; }
-.imagine h1 {
+.imagine .imagine-eyebrow {
     font-size: clamp(1.1rem, .9rem + .5vw, 1.3rem);
     letter-spacing: .3em;
     color: var(--gold);
@@ -631,13 +634,13 @@ button:not(.btn) a { color: inherit; text-decoration: none; }
 }
 
 .different { background: var(--brown-900); color: var(--tan-400); }
-.different h1 { color: var(--tan-500); }
+.different .section-title { color: var(--tan-500); }
 .different .container { text-align: center; }
 .different > .container > p { max-width: 680px; margin: 1rem auto 0; color: var(--tan-400); }
 
 .layers { background: var(--cream-100); }
 .layers .container { text-align: center; margin-bottom: 1rem; }
-.layers h1 { margin-bottom: 1rem; }
+.layers .section-title { margin-bottom: 1rem; }
 
 .layer-grid {
     display: grid;
@@ -677,7 +680,7 @@ button:not(.btn) a { color: inherit; text-decoration: none; }
 
 .sadly { background: var(--brown-950); color: var(--tan-400); }
 .sadly .container { text-align: center; }
-.sadly h1 { color: var(--tan-500); margin-bottom: 1.2rem; }
+.sadly .section-title { color: var(--tan-500); margin-bottom: 1.2rem; }
 .sadly > .container > p { max-width: 700px; margin: 0 auto; color: var(--tan-400); }
 
 /* Comparison (Traditional Therapy / Online Courses vs Inside Glow) */
@@ -741,7 +744,7 @@ button:not(.btn) a { color: inherit; text-decoration: none; }
 
 /* Pricing / everything-included */
 .pricing-wrap { margin-top: 3rem; text-align: left; }
-.pricing-wrap h1, .pricing-wrap h2, .pricing-wrap h3 { text-align: center; }
+.pricing-wrap h2, .pricing-wrap h3 { text-align: center; }
 
 .pricing-list {
     list-style: none;
@@ -840,14 +843,14 @@ button:not(.btn) a { color: inherit; text-decoration: none; }
     transition: transform var(--dur-med) var(--ease-out);
 }
 
-.story-text h2 {
+.story-text h1, .story-text h2 {
     margin-bottom: 1.6rem;
     color: var(--brown-900);
     position: relative;
     padding-bottom: 1.1rem;
 }
 
-.story-text h2::after {
+.story-text h1::after, .story-text h2::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -1659,8 +1662,8 @@ button:not(.btn) a { color: inherit; text-decoration: none; }
 .podcast .story-content { display: grid; grid-template-columns: 1fr 1.4fr; gap: var(--gap-lg); align-items: start; }
 .podcast .story-image img { border-radius: var(--radius-lg); box-shadow: var(--shadow-lift); }
 .podcast-text p { margin-bottom: 1.4rem; font-size: 1.05rem; line-height: 1.8; color: var(--brown-900); }
-.podcast-text h2 { margin-bottom: 1.6rem; color: var(--brown-900); position: relative; padding-bottom: 1.1rem; }
-.podcast-text h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 3px; background: var(--gold); }
+.podcast-text h1, .podcast-text h2 { margin-bottom: 1.6rem; color: var(--brown-900); position: relative; padding-bottom: 1.1rem; }
+.podcast-text h1::after, .podcast-text h2::after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 3px; background: var(--gold); }
 .podcast-text h3 { margin: 2.5rem 0 1.1rem; color: var(--brown-900); }
 .podcast-text ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 1.4rem; }
 .podcast-text li { padding-left: 1.6rem; position: relative; color: var(--brown-900); }

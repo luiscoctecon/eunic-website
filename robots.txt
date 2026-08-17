@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /waitilist.html
+Disallow: /waitilistmain.html
+Disallow: /waitlist-community.html
+Disallow: /thankyou.html
+
+Sitemap: https://euniceinsideglow.com/sitemap.xml
